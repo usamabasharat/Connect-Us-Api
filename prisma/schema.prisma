@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,109 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model attendees {
+  id         Int      @id(map: "pk_111") @default(autoincrement())
+  user_id    Int
+  meeting_id Int
+  accepted   Boolean?
+  notes      String?
+  optional   Boolean
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_100")
+  meetings   meetings @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_101")
+
+  @@index([user_id], map: "fk_22")
+  @@index([meeting_id], map: "fk_33")
+}
+
+model exception_slots {
+  id      Int      @id(map: "pk_81") @default(autoincrement())
+  from    DateTime @db.Timestamp(6)
+  to      DateTime @db.Timestamp(6)
+  user_id Int
+  users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_87")
+
+  @@index([user_id], map: "fk_82")
+}
+
+model feedbacks {
+  id                                  Int      @id(map: "pk_151") @default(autoincrement())
+  user_id                             Int
+  meeting_id                          Int
+  evaluated_by                        Int
+  score                               Int
+  json_feedback                       Json     @db.Json
+  users_feedbacks_user_idTousers      users    @relation("feedbacks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_131")
+  users_feedbacks_evaluated_byTousers users    @relation("feedbacks_evaluated_byTousers", fields: [evaluated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_222")
+  meetings                            meetings @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_44")
+
+  @@index([user_id], map: "fk_23")
+  @@index([evaluated_by], map: "fk_333")
+  @@index([meeting_id], map: "fk_4")
+}
+
+model generic_slots {
+  id      Int      @id(map: "pk_71") @default(autoincrement())
+  from    DateTime @db.Time(6)
+  to      DateTime @db.Time(6)
+  user_id Int
+  users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_76")
+
+  @@index([user_id], map: "fk_72")
+}
+
+model meetings {
+  id              Int               @id(map: "pk_135")
+  title           String
+  description     String
+  attachments     String
+  url             String
+  attendees       attendees[]
+  feedbacks       feedbacks[]
+  scheduled_slots scheduled_slots[]
+}
+
+model questions {
+  id         Int    @id(map: "pk_61") @default(autoincrement())
+  text       String
+  created_by Int
+  users      users  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_63")
+
+  @@index([created_by], map: "fk_62")
+}
+
+model scheduled_slots {
+  id         Int      @id(map: "pk_11") @default(autoincrement())
+  from       DateTime @db.Timestamp(6)
+  to         DateTime @db.Timestamp(6)
+  meeting_id Int
+  user_id    Int
+  meetings   meetings @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_8")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_9")
+
+  @@index([meeting_id], map: "fk_5")
+  @@index([user_id], map: "fk_6")
+}
+
+model users {
+  id                                      Int               @id(map: "pk_1")
+  first_name                              String            @db.VarChar(255)
+  last_name                               String            @db.VarChar(255)
+  email                                   String            @db.VarChar(255)
+  phone                                   String            @db.VarChar(50)
+  password                                String
+  salt                                    String
+  manager_id                              Int?
+  attendees                               attendees[]
+  exception_slots                         exception_slots[]
+  feedbacks_feedbacks_user_idTousers      feedbacks[]       @relation("feedbacks_user_idTousers")
+  feedbacks_feedbacks_evaluated_byTousers feedbacks[]       @relation("feedbacks_evaluated_byTousers")
+  generic_slots                           generic_slots[]
+  questions                               questions[]
+  scheduled_slots                         scheduled_slots[]
+  users                                   users?            @relation("usersTousers", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_5")
+  other_users                             users[]           @relation("usersTousers")
+
+  @@index([manager_id], map: "fk_2")
 }
