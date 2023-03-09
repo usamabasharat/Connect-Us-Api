@@ -14,6 +14,7 @@ model attendees {
   accepted   Boolean?
   notes      String?
   optional   Boolean
+  type       user_types
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_100")
   meetings   meetings @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_101")
 
@@ -37,6 +38,7 @@ model feedbacks {
   meeting_id                          Int
   evaluated_by                        Int
   score                               Int
+  type                                activity_types
   json_feedback                       Json     @db.Json
   users_feedbacks_user_idTousers      users    @relation("feedbacks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_131")
   users_feedbacks_evaluated_byTousers users    @relation("feedbacks_evaluated_byTousers", fields: [evaluated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_222")
@@ -52,6 +54,7 @@ model generic_slots {
   from    DateTime @db.Time(6)
   to      DateTime @db.Time(6)
   user_id Int
+  day     day_types
   users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_76")
 
   @@index([user_id], map: "fk_72")
@@ -72,6 +75,7 @@ model questions {
   id         Int    @id(map: "pk_61") @default(autoincrement())
   text       String
   created_by Int
+  type       activity_types
   users      users  @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_63")
 
   @@index([created_by], map: "fk_62")
@@ -83,6 +87,7 @@ model scheduled_slots {
   to         DateTime @db.Timestamp(6)
   meeting_id Int
   user_id    Int
+  type       user_types
   meetings   meetings @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_8")
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_9")
 
@@ -99,6 +104,8 @@ model users {
   password                                String
   salt                                    String
   manager_id                              Int?
+  role                                    role_types
+  designation                             designation_types
   attendees                               attendees[]
   exception_slots                         exception_slots[]
   feedbacks_feedbacks_user_idTousers      feedbacks[]       @relation("feedbacks_user_idTousers")
@@ -110,4 +117,43 @@ model users {
   other_users                             users[]           @relation("usersTousers")
 
   @@index([manager_id], map: "fk_2")
+}
+
+enum role_types {
+  admin
+  super_admin
+  manager
+  user
+}
+
+enum designation_types {
+  se
+  pm
+  apm
+  tl
+  atl
+  sse
+  ase
+}
+
+enum user_types {
+  host
+  participation
+}
+
+enum activity_types {
+  mock
+  codereview
+  annual
+  biannual
+  quarterly
+  one
+}
+
+enum day_types {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
 }
