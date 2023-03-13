@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,177 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model attendees {
+  id         Int                      @id() @default(autoincrement())
+  user_id    Int
+  meeting_id Int
+  type       meeting_participant_type
+  accepted   Boolean?
+  notes      String?
+  optional   Boolean
+  users      users                    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  meetings   meetings                 @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id])
+  @@index([meeting_id])
+}
+
+model exception_slots {
+  id      Int      @id() @default(autoincrement())
+  from    DateTime @db.Timestamp(6)
+  to      DateTime @db.Timestamp(6)
+  user_id Int
+  users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_87")
+
+  @@index([user_id])
+}
+
+model feedbacks {
+  id                                  Int           @id() @default(autoincrement())
+  type                                feedback_type
+  user_id                             Int
+  meeting_id                          Int
+  evaluated_by                        Int
+  score                               Int
+  json_feedback                       Json          @db.Json
+  users_feedbacks_user_idTousers      users         @relation("feedbacks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_feedbacks_evaluated_byTousers users         @relation("feedbacks_evaluated_byTousers", fields: [evaluated_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  meetings                            meetings      @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id])
+  @@index([evaluated_by])
+  @@index([meeting_id])
+}
+
+model generic_slots {
+  id      Int      @id() @default(autoincrement())
+  from    DateTime @db.Time(6)
+  to      DateTime @db.Time(6)
+  user_id Int
+  type    week_day
+  users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id])
+}
+
+model meetings {
+  id              Int               @id()
+  title           String
+  description     String
+  attachments     String
+  url             String
+  attendees       attendees[]
+  feedbacks       feedbacks[]
+  scheduled_slots scheduled_slots[]
+}
+
+model questions {
+  id          Int                  @id() @default(autoincrement())
+  text        String
+  type        question_type
+  answer_type question_answer_type
+  created_by  Int
+  users       users                @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([created_by])
+}
+
+model scheduled_slots {
+  id         Int                      @id() @default(autoincrement())
+  from       DateTime                 @db.Timestamp(6)
+  to         DateTime                 @db.Timestamp(6)
+  meeting_id Int
+  user_id    Int
+  type       meeting_participant_type
+  meetings   meetings                 @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      users                    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([meeting_id])
+  @@index([user_id])
+}
+
+model users {
+  id                                      Int               @id()
+  first_name                              String            @db.VarChar(255)
+  last_name                               String            @db.VarChar(255)
+  email                                   String            @db.VarChar(255)
+  phone                                   String            @db.VarChar(50)
+  password                                String
+  salt                                    String
+  manager_id                              Int?
+  role                                    user_role
+  designation                             user_designation
+  attendees                               attendees[]
+  exception_slots                         exception_slots[]
+  feedbacks_feedbacks_user_idTousers      feedbacks[]       @relation("feedbacks_user_idTousers")
+  feedbacks_feedbacks_evaluated_byTousers feedbacks[]       @relation("feedbacks_evaluated_byTousers")
+  generic_slots                           generic_slots[]
+  questions                               questions[]
+  scheduled_slots                         scheduled_slots[]
+  users                                   users?            @relation("usersTousers", fields: [manager_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_users                             users[]           @relation("usersTousers")
+
+  @@index([manager_id])
+}
+
+enum user_designation {
+  ase
+  se
+  sse
+  atl
+  tl
+  apm
+  pm
+}
+
+enum user_role {
+  admin
+  superadmin
+  manager
+  user
+}
+
+enum feedback_type {
+  mock
+  codereview
+  one
+  annual
+  biannual
+  quarterly
+}
+
+enum attendee_type {
+  host
+  participant
+}
+
+enum question_type {
+  mock
+  codereview
+  one
+  annual
+  biannual
+  quarterly
+}
+
+enum question_answer_type {
+  numeric
+  string
+  boolean
+  options
+}
+
+enum meeting_participant_type {
+  host
+  participant
+}
+
+enum week_day {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
 }
