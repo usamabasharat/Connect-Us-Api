@@ -12,7 +12,7 @@ module.exports = {
 
 async function createUser(req, res) {
   const reqBody = req.body;
-  const { error } = userValidator.userCreateSchema.validate(reqBody);
+  const { error } = userValidator.userSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: "Invalid Body", error });
   }
@@ -40,8 +40,7 @@ async function updateUser(req, res) {
   id = Number(id);
   let reqObject = req.body;
   const { error } = userValidator.userUpdateSchema.validate({
-    ...reqObject,
-    id,
+    ...reqObject
   });
   if (error !== undefined) {
     return res.send({ message: "Invalid Body", error });
