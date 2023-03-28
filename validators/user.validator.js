@@ -23,6 +23,7 @@ const userObject = {
       'string.email': 'Please enter a valid email address',
       'any.required': 'Email is required',
     }),
+    salt: Joi.string(),
     phone: Joi.string().length(11).pattern(/^[0-9]+$/).required(),
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{8,30}$'))
@@ -47,7 +48,7 @@ const userObject = {
     }),
 }
 const userSchema = Joi.object(userObject);
-const {email,id,...updateUserObject} = userObject
+const {email,...updateUserObject} = userObject
 const userUpdateSchema = Joi.object(updateUserObject);
 module.exports = {
     userSchema,
