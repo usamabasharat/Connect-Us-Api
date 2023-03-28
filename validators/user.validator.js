@@ -3,21 +3,21 @@ const Joi = require("joi");
 const roleEnum = ['admin', 'superadmin', 'manager', 'user'];
 const designationEnum = ['ase', 'se', 'sse', 'atl', 'tl', 'apm', 'pm'];
 
-const userSchema = Joi.object({
+const userCreateSchema = Joi.object({
     id: Joi.number().greater(0),
     first_name: Joi.string()
         .pattern(new RegExp('^[a-zA-Z ]{2,30}$'))
         .required()
         .messages({
-            'string.pattern.base': 'Name must be between 2 and 30 characters long and contain only letters',
-            'any.required': 'Name is required',
+            'string.pattern.base': 'First Name must be between 2 and 30 characters long and contain only letters',
+            'any.required': 'First Name is required',
         }),
     last_name: Joi.string()
         .pattern(new RegExp('^[a-zA-Z ]{2,30}$'))
         .required()
         .messages({
-            'string.pattern.base': 'Name must be between 2 and 30 characters long and contain only letters',
-            'any.required': 'Name is required',
+            'string.pattern.base': 'Last Name must be between 2 and 30 characters long and contain only letters',
+            'any.required': 'Last Name is required',
         }),
     email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
@@ -39,27 +39,18 @@ const userSchema = Joi.object({
     .valid(...roleEnum)
     .required()
     .messages({
-      'any.only': `Status must be one of ${roleEnum.join(', ')}`,
-      'any.required': 'Status is required',
+      'any.only': `Role must be one of ${roleEnum.join(', ')}`,
+      'any.required': 'Role is required',
     }),
     designation: Joi.string()
     .valid(...designationEnum)
     .required()
     .messages({
-      'any.only': `Status must be one of ${designationEnum.join(', ')}`,
-      'any.required': 'Status is required',
+      'any.only': `Designation must be one of ${designationEnum.join(', ')}`,
+      'any.required': 'Designation is required',
     }),
 });
 
-const userUpdateSchema = Joi.object({
-    name: Joi.string(),
-    email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
-    id: Joi.number().required(),
-    points: Joi.number()
-});
-
 module.exports = {
-    userSchema,
-    userUpdateSchema
-};
+    userCreateSchema
+  };
