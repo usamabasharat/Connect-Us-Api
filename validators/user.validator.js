@@ -1,10 +1,7 @@
 const Joi = require("joi");
-
 const roleEnum = ['admin', 'superadmin', 'manager', 'user'];
 const designationEnum = ['ase', 'se', 'sse', 'atl', 'tl', 'apm', 'pm'];
-
-const userSchema = Joi.object({
-    id: Joi.number().greater(0),
+const userObject = {
     first_name: Joi.string()
         .pattern(new RegExp('^[a-zA-Z ]{2,30}$'))
         .required()
@@ -34,7 +31,6 @@ const userSchema = Joi.object({
             'string.pattern.base': 'Password must be at least 8 characters long and contain only letters and numbers',
             'any.required': 'Password is required',
         }),
-    salt: Joi.string().alphanum().min(1).max(191).required(),
     role: Joi.string()
     .valid(...roleEnum)
     .required()
@@ -49,16 +45,10 @@ const userSchema = Joi.object({
       'any.only': `Status must be one of ${designationEnum.join(', ')}`,
       'any.required': 'Status is required',
     }),
-});
-
-const userUpdateSchema = Joi.object({
-    name: Joi.string(),
-    email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } }),
-    id: Joi.number().required(),
-    points: Joi.number()
-});
-
+}
+const userSchema = Joi.object(userObject);
+const {email,id,...updateUserObject} = userObject
+const userUpdateSchema = Joi.object(updateUserObject);
 module.exports = {
     userSchema,
     userUpdateSchema
