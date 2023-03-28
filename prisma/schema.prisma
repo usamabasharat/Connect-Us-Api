@@ -61,7 +61,7 @@ model generic_slots {
 }
 
 model meetings {
-  id              Int               @id()
+  id              Int               @id() @default(autoincrement())
   title           String
   description     String
   attachments     String
@@ -97,7 +97,7 @@ model scheduled_slots {
 }
 
 model users {
-  id                                      Int               @id()
+  id                                      Int               @id() @default(autoincrement())
   first_name                              String            @db.VarChar(255)
   last_name                               String            @db.VarChar(255)
   email                                   String            @db.VarChar(255)
