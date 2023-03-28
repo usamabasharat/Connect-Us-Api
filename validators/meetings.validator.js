@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-export const scheduleSlotSchema = Joi.object({
+const scheduleSlotSchema = Joi.object({
   title: Joi.string().required().messages({
     "any.required": "Title is required",
   }),
@@ -14,3 +14,7 @@ export const scheduleSlotSchema = Joi.object({
     "any.required": "Question is required",
   }),
 });
+
+module.exports = {
+  scheduleSlotSchema,
+};
