@@ -39,7 +39,7 @@ async function updateUser(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = userValidator.userCreateSchema.validate({
+  const { error } = userValidator.userUpdateSchema.validate({
     ...reqObject,
     id,
   });
@@ -59,5 +59,5 @@ async function deleteUser(req, res) {
   let { id } = req.params;
   id = Number(id);
   let deleteUser = await userService.deleteUser(id);
-  if(deleteUser) res.send({ message: "User does not exist" });
+  if(deleteUser) res.send({ message: "User has been deleted" });
 }
