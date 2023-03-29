@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const week_day = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
-export const genericSlotSchema = Joi.object({
+const genericSlotSchema = Joi.object({
   from: Joi.date().timestamp().required.messages({
     "any.required": "from is required",
   }),
@@ -20,3 +20,7 @@ export const genericSlotSchema = Joi.object({
     "any.required": "Week Day is required",
   }),
 });
+
+module.exports = {
+  genericSlotSchema
+};

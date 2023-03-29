@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-export const scheduleSlotSchema = Joi.object({
+const scheduleSlotSchema = Joi.object({
   from: Joi.date().timestamp().required.messages({
     "any.required": "from is required",
   }),
@@ -10,3 +10,7 @@ export const scheduleSlotSchema = Joi.object({
   meeting_id: Joi.number().greater(0),
   user_id: Joi.number().greater(0),
 });
+
+module.exports = {
+  scheduleSlotSchema
+};

@@ -56,6 +56,6 @@ async function updateMeeting(req, res) {
 async function deleteMeeting(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let deleteMeeting = await meetingService.deleteMeeting({ id });
+  let deleteMeeting = await meetingService.deleteMeeting(id);
   res.send(deleteMeeting);
 }
