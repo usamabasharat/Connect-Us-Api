@@ -1,4 +1,4 @@
-const userService = require("../dal/dao");
+const userService = require("../dal/user.dal");
 const userValidator = require("../validators/user.validator");
 
 module.exports = {
