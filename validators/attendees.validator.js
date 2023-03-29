@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const meeting_participant_type = ["host", "participant"];
-export const exceptionSlotSchema = Joi.object({
+const attendeesSchema = Joi.object({
   user_id: Joi.number().greater(0),
   meeting_id: Joi.number().greater(0),
   type: Joi.string()
@@ -19,3 +19,7 @@ export const exceptionSlotSchema = Joi.object({
     "any.required": "optional is required",
   }),
 });
+
+module.exports = {
+ attendeesSchema
+};
