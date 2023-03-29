@@ -23,5 +23,5 @@ const feedbackSchema = Joi.object({
 })
 
 module.exports = {
-  feedback
+  feedbackSchema
 };

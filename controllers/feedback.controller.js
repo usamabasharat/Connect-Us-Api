@@ -11,7 +11,7 @@ module.exports = {
 
 async function createFeedback(req, res) {
   const reqBody = req.body;
-  const { error } = feedbackValidator.feedback.validate(reqBody);
+  const { error } = feedbackValidator.feedbackSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: "Invalid Body", error });
   }
@@ -38,7 +38,7 @@ async function updateFeedback(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = feedbackValidator.feedback.validate({
+  const { error } = feedbackValidator.feedbackSchema.validate({
     ...reqObject,
   });
   if (error !== undefined) {

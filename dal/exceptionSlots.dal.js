@@ -10,8 +10,13 @@ module.exports = {
 };
 
 function createExceptionSlots(exception_slotData) {
+  const { from , to , user_id } = exception_slotData;
   return prisma.exception_slots.create({
-    data: { ...exception_slotData }
+    data: {
+      from: new Date(from),
+      to: new Date(to),
+      user_id: user_id
+    }
   });
 }
 
@@ -31,6 +36,14 @@ function deleteExceptionSlots(id) {
   })
 }
 
-function updateExceptionSlots(data, options) {
-  return prisma.exception_slots.update(data, options);
+function updateExceptionSlots(data) {
+  const { from , to , user_id } = data.data;
+  const updatedData = {
+    where: data.where,
+    data:{
+    from: new Date(from),
+    to: new Date(to),
+    user_id: user_id
+  }}
+  return prisma.exception_slots.update(updatedData);
 }

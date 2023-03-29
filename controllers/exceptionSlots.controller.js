@@ -56,6 +56,6 @@ async function updateExceptionSlots(req, res) {
 async function deleteExceptionSlots(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let deleteexceptionSlot = await exceptionSlotsService.deleteExceptionSlots({ id });
+  let deleteexceptionSlot = await exceptionSlotsService.deleteExceptionSlots(id);
   res.send(deleteexceptionSlot);
 }
