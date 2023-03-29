@@ -3,10 +3,10 @@ const Joi = require("joi");
 const week_day = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
 const genericSlotSchema = Joi.object({
-  from: Joi.date().timestamp().required.messages({
+  from: Joi.date().timestamp().required().messages({
     "any.required": "from is required",
   }),
-  to: Joi.date().timestamp().required.messages({
+  to: Joi.date().timestamp().required().messages({
     "any.required": "from is required",
   }),
   user_id: Joi.number().greater(0),
