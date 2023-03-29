@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 8000;
+const PORT = 6000;
 const routes = require('./routes/index');
 
 app.use(express.urlencoded({ extended: true }));
