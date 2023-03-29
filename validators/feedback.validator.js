@@ -16,6 +16,9 @@ const feedbackSchema = Joi.object({
   meeting_id: Joi.number().greater(0),
   evaluated_by: Joi.number().greater(0),
   score: Joi.number().greater(0),
+  json_feedback: Joi.object({
+    name: Joi.string().required(),
+  }),
 })
 
 module.exports = {
