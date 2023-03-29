@@ -10,7 +10,7 @@ const question_type = [
 ];
 const question_answer_type = ["numeric", "string", "boolean", "options"];
 
-export const scheduleSlotSchema = Joi.object({
+const questionsSchema = Joi.object({
   text: Joi.string().required().messages({
     "any.required": "Question is required",
   }),
@@ -32,3 +32,7 @@ export const scheduleSlotSchema = Joi.object({
     }),
   created_by: Joi.number().greater(0),
 });
+
+module.exports = {
+  questionsSchema
+};

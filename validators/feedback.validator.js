@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const feedback_type = ['mock', 'codereview', 'one', 'annual', 'biannual', 'quarterly'];
 
-export const genericSlotSchema = Joi.object({
+const feedbackSchema = Joi.object({
   type:Joi.string()
   .valid(...feedback_type)
   .required()
