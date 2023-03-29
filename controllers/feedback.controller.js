@@ -56,6 +56,6 @@ async function updateFeedback(req, res) {
 async function deleteFeedback(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let deleteFeedback = await feedbackService.deleteFeedback({ id });
+  let deleteFeedback = await feedbackService.deleteFeedback(id);
   res.send(deleteFeedback);
 }
