@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-export const exceptionSlotSchema = Joi.object({
+const exceptionSlotSchema = Joi.object({
   from: Joi.date().timestamp().required.messages({
     "any.required": "from is required",
   }),
@@ -9,3 +9,7 @@ export const exceptionSlotSchema = Joi.object({
   }),
   user_id: Joi.number().greater(0),
 });
+
+module.exports = {
+  exceptionSlotSchema
+};
