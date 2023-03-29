@@ -6,6 +6,7 @@ const feedbackRoutes = require("./feedback")
 const questionsRoutes = require("./questions")
 const genericRoutes = require("./genericSlots")
 const scheduledSlotsRoutes = require("./scheduleSlot")
+const attendeesRoutes = require("./attendees")
 const router = express.Router();
 
 module.exports = router;
@@ -17,3 +18,4 @@ router.use("/feedback", feedbackRoutes);
 router.use("/questions", questionsRoutes);
 router.use("/genericslots", genericRoutes);
 router.use("/scheduledslots", scheduledSlotsRoutes);
+router.use("/attendees", attendeesRoutes);
