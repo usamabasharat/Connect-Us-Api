@@ -19,7 +19,6 @@ const feedbackSchema = Joi.object({
   json_feedback: Joi.object({
     name: Joi.string().required(),
   }),
-
 })
 
 module.exports = {
