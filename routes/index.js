@@ -4,6 +4,7 @@ const meetingsRoutes = require("./meetings")
 const feedbackRoutes = require("./feedback")
 const questionsRoutes = require("./questions")
 const genericRoutes = require("./genericSlots")
+const scheduledSlotsRoutes = require("./scheduleSlot")
 const router = express.Router();
 
 module.exports = router;
@@ -13,3 +14,4 @@ router.use("/meetings", meetingsRoutes);
 router.use("/feedback", feedbackRoutes);
 router.use("/questions", questionsRoutes);
 router.use("/genericslots", genericRoutes);
+router.use("/scheduledslots", scheduledSlotsRoutes);
