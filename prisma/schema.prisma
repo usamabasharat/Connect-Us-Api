@@ -76,6 +76,7 @@ model questions {
   text        String
   type        question_type
   answer_type question_answer_type
+  question_answer Json
   created_by  Int
   users       users                @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
 

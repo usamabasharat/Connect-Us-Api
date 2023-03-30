@@ -30,6 +30,9 @@ const questionsSchema = Joi.object({
       )}`,
       "any.required": "Question Answer Type is required",
     }),
+    question_answer: Joi.object({
+      name: Joi.string().required(),
+    }),
   created_by: Joi.number().greater(0),
 });
 
