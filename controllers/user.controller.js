@@ -22,6 +22,7 @@ async function createUser(req, res) {
 
 async function getUsers(req, res) {
   let users = await userService.getUsers();
+  console.log(users);
   res.send(users);
 }
 
