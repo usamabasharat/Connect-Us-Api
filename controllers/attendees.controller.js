@@ -1,21 +1,22 @@
 const attendeesService = require('../dal/attendees.dal');
 const attendeesValidator = require('../validators/attendees.validator');
+const CONST = require("../const");
 
 module.exports = {
-  createAttendees,
+  createAttendee,
   getAttendees,
-  getAttendeesById,
-  updateAttendees,
-  deleteAttendees,
+  getAttendeeById,
+  updateAttendee,
+  deleteAttendee,
 };
 
-async function createAttendees(req, res) {
+async function createAttendee(req, res) {
   const reqBody = req.body;
   const { error } = attendeesValidator.attendeesSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: 'Invalid Body', error });
+    return res.send({ message: `${CONST.INVALID_BODY}` , error });
   }
-  const attendees = await attendeesService.createAttendees(reqBody);
+  const attendees = await attendeesService.createAttendee(reqBody);
   res.send({ attendees });
 }
 
@@ -24,37 +25,33 @@ async function getAttendees(req, res) {
   res.send(attendees);
 }
 
-async function getAttendeesById(req, res) {
+async function getAttendeeById(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let attendees = await attendeesService.getAttendeesById(id);
+  let attendees = await attendeesService.getAttendeeById(id);
   if (!attendees) {
-    return res.send({ message: 'Attendee does not exist' });
+    return res.send({ message: `${CONST.NO_ATTENDEES}` });
   } else res.send(attendees);
 }
 
-async function updateAttendees(req, res) {
+async function updateAttendee(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = attendeesValidator.attendeesSchema.validate({
-    ...reqObject,
-  });
+  const { error } = attendeesValidator.attendeesSchema.validate(reqObject);
   if (error !== undefined) {
-    return res.send({ message: 'Invalid Body', error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  let updateAttendees = await attendeesService.updateAttendee({
+  let updateAttendee = await attendeesService.updateAttendee({
     where: { id },
-    data: {
-      ...reqObject,
-    },
+    data:reqObject,
   });
-  res.send(updateAttendees);
+  res.send(updateAttendee);
 }
 
-async function deleteAttendees(req, res) {
+async function deleteAttendee(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let deleteAttendees = await attendeesService.deleteAttendee(id);
-  res.send(deleteAttendees);
+  let deleteAttendee = await attendeesService.deleteAttendee(id);
+  res.send(deleteAttendee);
 }

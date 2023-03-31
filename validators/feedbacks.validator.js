@@ -3,10 +3,10 @@ const CONST = require("../const");
 
 const feedbackSchema = Joi.object({
   type:Joi.string()
-  .valid(...CONST.question_type)
+  .valid(...CONST.QUESTION_TYPE_ENUM)
   .required()
   .messages({
-    "any.only": `${CONST.FEEDBACK_MESSAGE} ${CONST.question_type.join(
+    "any.only": `${CONST.FEEDBACK_MESSAGE} ${CONST.QUESTION_TYPE_ENUM.join(
       ", "
     )}`,
     "any.required": `${CONST.FEEDBACK_REQUIRED}`,

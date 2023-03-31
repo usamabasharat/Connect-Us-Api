@@ -10,10 +10,10 @@ const genericSlotSchema = Joi.object({
   }),
   user_id: Joi.number().greater(0),
   type:Joi.string()
-  .valid(...CONST.week_day)
+  .valid(...CONST.WEEK_DAY)
   .required()
   .messages({
-    "any.only": `${CONST.WEEKDAY_MESSAGE} ${CONST.week_day.join(
+    "any.only": `${CONST.WEEKDAY_MESSAGE} ${CONST.WEEK_DAY.join(
       ", "
     )}`,
     "any.required": `${CONST.WEEKDAY_REQUIRED}`,

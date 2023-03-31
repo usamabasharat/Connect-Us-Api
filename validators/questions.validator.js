@@ -6,23 +6,23 @@ const questionsSchema = Joi.object({
     "any.required": `${CONST.QUESTION_REQUIRED}`,
   }),
   type: Joi.string()
-    .valid(...CONST.question_type)
+    .valid(...CONST.QUESTION_TYPE_ENUM)
     .required()
     .messages({
-      "any.only": `${CONST.QUESTION_MESSAGE} ${CONST.question_type.join(", ")}`,
+      "any.only": `${CONST.QUESTION_MESSAGE} ${CONST.QUESTION_TYPE_ENUM.join(", ")}`,
       "any.required": `${CONST.QUESTION_TYPE}`,
     }),
   answer_type: Joi.string()
-    .valid(...CONST.question_answer_type)
+    .valid(...CONST.QUESTION_ANSWER_TYPE)
     .required()
     .messages({
-      "any.only": `${CONST.ANSWER_TYPE} ${CONST.question_answer_type.join(
+      "any.only": `${CONST.ANSWER_TYPE} ${CONST.QUESTION_ANSWER_TYPE.join(
         ", "
       )}`,
       "any.required": `${CONST.ANSWER_REQUIRED}`,
     }),
     question_answer: Joi.object({
-      name: Joi.string().required(),
+      answers : Joi.array().required(),
     }),
   created_by: Joi.number().greater(0),
 });

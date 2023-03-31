@@ -1,5 +1,6 @@
 const scheduledSlotsService = require("../dal/scheduleSlot.dao")
-const schedhuledSlotsValidator = require("../validators/scheduledSlot.validator");
+const scheduledSlotsValidator = require("../validators/scheduledSlot.validator");
+const CONST = require("../const");
 
 module.exports = {
   createScheduleSlots,
@@ -11,9 +12,9 @@ module.exports = {
 
 async function createScheduleSlots(req, res) {
   const reqBody = req.body;
-  const { error } = schedhuledSlotsValidator.scheduleSlotSchema.validate(reqBody);
+  const { error } = scheduledSlotsValidator.scheduleSlotSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   const scheduledSlot = await scheduledSlotsService.createScheduleSlots(reqBody);
   res.send({ scheduledSlot });
@@ -29,7 +30,7 @@ async function getScheduledSlotsById(req, res) {
   id = Number(id);
   let scheduleSlot = await scheduledSlotsService.getScheduledSlotsById(id);
   if (!scheduleSlot) {
-    return res.send({ message: "Scheduled Slot does not exist" });
+    return res.send({ message: `${CONST.NO_SCHEDULED_SLOT}` });
   }
   else res.send(scheduleSlot);
 }
@@ -38,13 +39,13 @@ async function updateScheduledSlots(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = schedhuledSlotsValidator.scheduleSlotSchema.validate({
+  const { error } = scheduledSlotsValidator.scheduleSlotSchema.validate({
     ...reqObject,
   });
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  let updateScheduleSlot = await scheduledSlotsService.updateSchdeuledSlots({
+  let updateScheduleSlot = await scheduledSlotsService.updateScheduledSlots({
     where: { id },
     data: {
       ...reqObject,

@@ -1,21 +1,22 @@
 const exceptionSlotsService = require("../dal/exceptionSlots.dal")
 const exceptionSlotsValidator = require("../validators/exceptionSlot.validator");
+const CONST = require("../const");
 
 module.exports = {
-  createExceptionSlots,
+  createExceptionSlot,
   getExceptionSlots,
-  getExceptionSlotsById,
-  updateExceptionSlots,
-  deleteExceptionSlots,
+  getExceptionSlotById,
+  updateExceptionSlot,
+  deleteExceptionSlot,
 };
 
-async function createExceptionSlots(req, res) {
+async function createExceptionSlot(req, res) {
   const reqBody = req.body;
   const { error } = exceptionSlotsValidator.exceptionSlotSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  const exceptionSlot = await exceptionSlotsService.createExceptionSlots(reqBody);
+  const exceptionSlot = await exceptionSlotsService.createExceptionSlot(reqBody);
   res.send({ exceptionSlot });
 }
 
@@ -24,38 +25,34 @@ async function getExceptionSlots(req, res) {
   res.send(exceptionSlot);
 }
 
-async function getExceptionSlotsById(req, res) {
+async function getExceptionSlotById(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let exceptionSlot = await exceptionSlotsService.getExceptionSlotsById(id);
+  let exceptionSlot = await exceptionSlotsService.getExceptionSlotById(id);
   if (!exceptionSlot) {
-    return res.send({ message: "Exceptional Slot does not exist" });
+    return res.send({ message: `${CONST.NO_EXCEPTION_SLOT}` });
   }
   else res.send(exceptionSlot);
 }
 
-async function updateExceptionSlots(req, res) {
+async function updateExceptionSlot(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = exceptionSlotsValidator.exceptionSlotSchema.validate({
-    ...reqObject,
-  });
+  const { error } = exceptionSlotsValidator.exceptionSlotSchema.validate(reqObject);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  let updateexceptionSlot = await exceptionSlotsService.updateExceptionSlots({
+  let updateExceptionSlot = await exceptionSlotsService.updateExceptionSlot({
     where: { id },
-    data: {
-      ...reqObject,
-    },
+    data: reqObject,
   });
-  res.send(updateexceptionSlot);
+  res.send(updateExceptionSlot);
 }
 
-async function deleteExceptionSlots(req, res) {
+async function deleteExceptionSlot(req, res) {
   let { id } = req.params;
   id = Number(id);
-  let deleteexceptionSlot = await exceptionSlotsService.deleteExceptionSlots(id);
-  res.send(deleteexceptionSlot);
+  let deleteExceptionSlot = await exceptionSlotsService.deleteExceptionSlot(id);
+  res.send(deleteExceptionSlot);
 }

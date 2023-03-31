@@ -2,10 +2,10 @@ const express = require("express");
 const usersRoutes = require("./user");
 const meetingsRoutes = require("./meetings")
 const exceptionSlotRoutes = require("./exception_slots")
-const feedbackRoutes = require("./feedback")
+const feedbacksRoutes = require("./feedbacks")
 const questionsRoutes = require("./questions")
 const genericRoutes = require("./genericSlots")
-const scheduledSlotsRoutes = require("./scheduleSlot")
+const scheduledSlotsRoutes = require("./scheduleSlots")
 const attendeesRoutes = require("./attendees")
 const router = express.Router();
 
@@ -13,9 +13,9 @@ module.exports = router;
 
 router.use("/users", usersRoutes);
 router.use("/meetings", meetingsRoutes);
-router.use("/exceptionslots", exceptionSlotRoutes);
-router.use("/feedback", feedbackRoutes);
+router.use("/exceptionSlots", exceptionSlotRoutes);
+router.use("/feedbacks", feedbacksRoutes);
 router.use("/questions", questionsRoutes);
-router.use("/genericslots", genericRoutes);
-router.use("/scheduledslots", scheduledSlotsRoutes);
+router.use("/genericSlots", genericRoutes);
+router.use("/scheduledSlots", scheduledSlotsRoutes);
 router.use("/attendees", attendeesRoutes);

@@ -11,10 +11,10 @@ const scheduleSlotSchema = Joi.object({
   meeting_id: Joi.number().greater(0),
   user_id: Joi.number().greater(0),
   type: Joi.string()
-    .valid(...CONST.meeting_participant_type)
+    .valid(...CONST.MEETING_PARTICIPANT_TYPE)
     .required()
     .messages({
-      "any.only": `${CONST.TYPE_MESSAGE} ${CONST.meeting_participant_type.join(
+      "any.only": `${CONST.TYPE_MESSAGE} ${CONST.MEETING_PARTICIPANT_TYPE.join(
         ", "
       )}`,
       "any.required":`${CONST.PARTICIPANT_REQUIRED}`,

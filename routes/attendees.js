@@ -5,8 +5,8 @@ const attendeesCtrl = require("../controllers/attendees.controller");
 const router = express.Router();
 module.exports = router;
 
-router.post("/", asyncHandler(attendeesCtrl.createAttendees));
+router.post("/", asyncHandler(attendeesCtrl.createAttendee));
 router.get("/", asyncHandler(attendeesCtrl.getAttendees));
-router.get("/:id", asyncHandler(attendeesCtrl.getAttendeesById));
-router.put("/:id" , asyncHandler(attendeesCtrl.updateAttendees))
-router.delete("/:id" , asyncHandler(attendeesCtrl.deleteAttendees))
+router.get("/:id", asyncHandler(attendeesCtrl.getAttendeeById));
+router.put("/:id" , asyncHandler(attendeesCtrl.updateAttendee))
+router.delete("/:id" , asyncHandler(attendeesCtrl.deleteAttendee))

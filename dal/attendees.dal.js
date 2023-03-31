@@ -2,14 +2,14 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 module.exports = {
-  createAttendees,
+  createAttendee,
   getAttendees,
-  getAttendeesById,
+  getAttendeeById,
   deleteAttendee,
   updateAttendee
 };
 
-function createAttendees(attendeeData) {
+function createAttendee(attendeeData) {
   return prisma.attendees.create({
     data: { ...attendeeData }
   });
@@ -19,7 +19,7 @@ function getAttendees() {
   return prisma.attendees.findMany()
 }
 
-function getAttendeesById(id) {
+function getAttendeeById(id) {
   return prisma.attendees.findUnique({
     where: { id }
   })

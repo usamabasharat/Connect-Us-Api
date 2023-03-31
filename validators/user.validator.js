@@ -33,17 +33,17 @@ const userObject = {
             'any.required': `${CONST.PASSWORD_REQUIRED}`,
         }),
     role: Joi.string()
-    .valid(...CONST.roleEnum)
+    .valid(...CONST.ROLE_ENUM)
     .required()
     .messages({
-      'any.only': `${CONST.STATUS} ${CONST.roleEnum.join(', ')}`,
+      'any.only': `${CONST.STATUS} ${CONST.ROLE_ENUM.join(', ')}`,
       'any.required': `${CONST.STATUS_REQUIRED}`,
     }),
     designation: Joi.string()
-    .valid(...CONST.designationEnum)
+    .valid(...CONST.DESIGNATION_ENUM)
     .required()
     .messages({
-      'any.only': `${CONST.STATUS} ${CONST.designationEnum.join(', ')}`,
+      'any.only': `${CONST.STATUS} ${CONST.DESIGNATION_ENUM.join(', ')}`,
       'any.required': `${CONST.STATUS_REQUIRED}`,
     }),
 }

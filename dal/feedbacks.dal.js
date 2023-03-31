@@ -3,7 +3,7 @@ const prisma = new PrismaClient()
 
 module.exports = {
   createFeedback,
-  getFeedback,
+  getFeedbacks,
   getFeedbackById,
   deleteFeedback,
   updateFeedback
@@ -15,7 +15,7 @@ function createFeedback(feedbackData) {
   });
 }
 
-function getFeedback() {
+function getFeedbacks() {
   return prisma.feedbacks.findMany()
 }
 
