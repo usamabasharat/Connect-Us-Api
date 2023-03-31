@@ -1,34 +1,25 @@
 const Joi = require("joi");
-
-const question_type = [
-  "mock",
-  "codereview",
-  "one",
-  "annual",
-  "biannual",
-  "quarterly",
-];
-const question_answer_type = ["numeric", "string", "boolean", "options"];
+const CONST = require("../const")
 
 const questionsSchema = Joi.object({
   text: Joi.string().required().messages({
-    "any.required": "Question is required",
+    "any.required": `${CONST.QUESTION_REQUIRED}`,
   }),
   type: Joi.string()
-    .valid(...question_type)
+    .valid(...CONST.question_type)
     .required()
     .messages({
-      "any.only": `Question Type must be one of ${question_type.join(", ")}`,
-      "any.required": "Question Type is required",
+      "any.only": `${CONST.QUESTION_MESSAGE} ${CONST.question_type.join(", ")}`,
+      "any.required": `${CONST.QUESTION_TYPE}`,
     }),
   answer_type: Joi.string()
-    .valid(...question_answer_type)
+    .valid(...CONST.question_answer_type)
     .required()
     .messages({
-      "any.only": `Question Answer Type must be one of ${question_answer_type.join(
+      "any.only": `${CONST.ANSWER_TYPE} ${CONST.question_answer_type.join(
         ", "
       )}`,
-      "any.required": "Question Answer Type is required",
+      "any.required": `${CONST.ANSWER_REQUIRED}`,
     }),
     question_answer: Joi.object({
       name: Joi.string().required(),

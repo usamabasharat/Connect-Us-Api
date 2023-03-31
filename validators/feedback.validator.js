@@ -1,16 +1,15 @@
 const Joi = require("joi");
-
-const feedback_type = ['mock', 'codereview', 'one', 'annual', 'biannual', 'quarterly'];
+const CONST = require("../const");
 
 const feedbackSchema = Joi.object({
   type:Joi.string()
-  .valid(...feedback_type)
+  .valid(...CONST.question_type)
   .required()
   .messages({
-    "any.only": `Feedback type must be one of ${feedback_type.join(
+    "any.only": `${CONST.FEEDBACK_MESSAGE} ${CONST.question_type.join(
       ", "
     )}`,
-    "any.required": "feedback type is required",
+    "any.required": `${CONST.FEEDBACK_REQUIRED}`,
   }),
   user_id: Joi.number().greater(0),
   meeting_id: Joi.number().greater(0),
