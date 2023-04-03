@@ -11,13 +11,19 @@ module.exports = {
 };
 
 async function createQuestion(req, res) {
-  const reqBody = req.body;
+  const reqBody = {
+    text: req.body.text,
+    type: req.body.type,
+    answer_type: req.body.answerType,
+    question_answer: {answers: req.body.Options},
+    created_by: req.body.createdBy
+  }
   const { error } = questionValidator.questionsSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: `${CONST.INVALID_BODY}`, error });
+    return res.status(400).send({ message: `${CONST.INVALID_BODY}`, error });
   }
   const question = await questionService.createQuestion(reqBody);
-  res.send({ question });
+  res.status(200).send({ question });
 }
 
 async function getQuestions(req, res) {
