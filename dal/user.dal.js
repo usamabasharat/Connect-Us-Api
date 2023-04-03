@@ -61,4 +61,3 @@ function deleteUser(id) {
 function updateUser(data, options) {
   return prisma.users.update(data, options);
 }
-

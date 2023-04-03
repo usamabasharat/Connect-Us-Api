@@ -6,7 +6,7 @@ module.exports = {
   getScheduledSlots,
   getScheduledSlotsById,
   deleteScheduledSlots,
-  updateSchdeuledSlots
+  updateScheduledSlots
 };
 
 function createScheduleSlots(scheduled_slotData) {
@@ -39,7 +39,7 @@ function deleteScheduledSlots(id) {
   })
 }
 
-function updateSchdeuledSlots(data) {
+function updateScheduledSlots(data) {
   const { from , to , user_id , meeting_id, type } = data.data;
 
   return prisma.scheduled_slots.update({

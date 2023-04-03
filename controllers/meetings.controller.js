@@ -1,5 +1,6 @@
 const meetingService = require("../dal/meetings.dal")
 const meetingValidator = require("../validators/meetings.validator");
+const CONST = require("../const");
 
 module.exports = {
   createMeeting,
@@ -13,7 +14,7 @@ async function createMeeting(req, res) {
   const reqBody = req.body;
   const { error } = meetingValidator.scheduleSlotSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   const meeting = await meetingService.createMeeting(reqBody);
   res.send({ meeting });
@@ -29,7 +30,7 @@ async function getMeetingById(req, res) {
   id = Number(id);
   let meeting = await meetingService.getMeetingById(id);
   if (!meeting) {
-    return res.send({ message: "Meeting does not exist" });
+    return res.send({ message: `${CONST.NO_MEETING}` });
   }
   else res.send(meeting);
 }
@@ -38,17 +39,13 @@ async function updateMeeting(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = meetingValidator.scheduleSlotSchema.validate({
-    ...reqObject,
-  });
+  const { error } = meetingValidator.scheduleSlotSchema.validate(reqObject);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   let updateMeeting = await meetingService.updateMeeting({
     where: { id },
-    data: {
-      ...reqObject,
-    },
+    data: reqObject,
   });
   res.send(updateMeeting);
 }

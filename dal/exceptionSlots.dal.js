@@ -2,14 +2,14 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 module.exports = {
-  createExceptionSlots,
+  createExceptionSlot,
   getExceptionSlots,
-  getExceptionSlotsById,
-  deleteExceptionSlots,
-  updateExceptionSlots
+  getExceptionSlotById,
+  deleteExceptionSlot,
+  updateExceptionSlot
 };
 
-function createExceptionSlots(exception_slotData) {
+function createExceptionSlot(exception_slotData) {
   const { from , to , user_id } = exception_slotData;
   return prisma.exception_slots.create({
     data: {
@@ -24,19 +24,19 @@ function getExceptionSlots() {
   return prisma.exception_slots.findMany()
 }
 
-function getExceptionSlotsById(id) {
+function getExceptionSlotById(id) {
   return prisma.exception_slots.findUnique({
     where: { id }
   })
 }
 
-function deleteExceptionSlots(id) {
+function deleteExceptionSlot(id) {
   return prisma.exception_slots.delete({
     where: { id },
   })
 }
 
-function updateExceptionSlots(data) {
+function updateExceptionSlot(data) {
   const { from , to , user_id } = data.data;
   const updatedData = {
     where: data.where,

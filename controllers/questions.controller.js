@@ -1,5 +1,6 @@
 const questionService = require("../dal/questions.dao");
-const questionValidator = require("../validators/question.validator");
+const questionValidator = require("../validators/questions.validator");
+const CONST = require("../const");
 
 module.exports = {
   createQuestion,
@@ -9,12 +10,11 @@ module.exports = {
   deleteQuestion,
 };
 
-
 async function createQuestion(req, res) {
   const reqBody = req.body;
   const { error } = questionValidator.questionsSchema.validate(reqBody);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   const question = await questionService.createQuestion(reqBody);
   res.send({ question });
@@ -30,7 +30,7 @@ async function getQuestionById(req, res) {
   id = Number(id);
   let question = await questionService.getQuestionById(id);
   if (!question) {
-    return res.send({ message: "Question does not exist" });
+    return res.send({ message: `${CONST.NO_QUESTION}` });
   }
   else res.send(question);
 }
@@ -39,17 +39,13 @@ async function updateQuestion(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
-  const { error } = questionValidator.questionsSchema.validate({
-    ...reqObject
-  });
+  const { error } = questionValidator.questionsSchema.validate(reqObject);
   if (error !== undefined) {
-    return res.send({ message: "Invalid Body", error });
+    return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   let updateQuestion = await questionService.updateQuestion({
     where: { id },
-    data: {
-      ...reqObject,
-    },
+    data:reqObject,
   });
   res.send(updateQuestion);
 }
@@ -58,5 +54,5 @@ async function deleteQuestion(req, res) {
   let { id } = req.params;
   id = Number(id);
   let deleteQuestion = await questionService.deleteQuestion(id);
-  if(deleteQuestion) res.send({ message: "Question has been deleted" });
+  if(deleteQuestion) res.send({ message: `${CONST.QUESTION_DELETED}` });
 }

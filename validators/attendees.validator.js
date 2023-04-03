@@ -1,22 +1,22 @@
 const Joi = require("joi");
+const CONST = require("../const");
 
-const meeting_participant_type = ["host", "participant"];
 const attendeesSchema = Joi.object({
   user_id: Joi.number().greater(0),
   meeting_id: Joi.number().greater(0),
   type: Joi.string()
-    .valid(...meeting_participant_type)
+    .valid(...CONST.MEETING_PARTICIPANT_TYPE)
     .required()
     .messages({
-      "any.only": `meeting participant type must be one of ${meeting_participant_type.join(
+      "any.only": `${CONST.TYPE_MESSAGE} ${CONST.MEETING_PARTICIPANT_TYPE.join(
         ", "
       )}`,
-      "any.required": "meeting participant type is required",
+      "any.required": `${CONST.PARTICIPANT_REQUIRED}`,
     }),
   accepted: Joi.boolean(),
   notes: Joi.string(),
   optional: Joi.boolean().required().messages({
-    "any.required": "optional is required",
+    "any.required": `${CONST.OPTIONAL_REQUIRED}`,
   }),
 });
 

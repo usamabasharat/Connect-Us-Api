@@ -1,23 +1,22 @@
 const Joi = require("joi");
-
-const week_day = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+const CONST = require("../const");
 
 const genericSlotSchema = Joi.object({
   from: Joi.date().timestamp().required().messages({
-    "any.required": "from is required",
+    "any.required": `${CONST.FROM_TIME}`,
   }),
   to: Joi.date().timestamp().required().messages({
-    "any.required": "from is required",
+    "any.required": `${CONST.TO_TIME}`,
   }),
   user_id: Joi.number().greater(0),
   type:Joi.string()
-  .valid(...week_day)
+  .valid(...CONST.WEEK_DAY)
   .required()
   .messages({
-    "any.only": `Week day must be one of ${week_day.join(
+    "any.only": `${CONST.WEEKDAY_MESSAGE} ${CONST.WEEK_DAY.join(
       ", "
     )}`,
-    "any.required": "Week Day is required",
+    "any.required": `${CONST.WEEKDAY_REQUIRED}`,
   }),
 });
 
