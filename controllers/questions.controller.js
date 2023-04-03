@@ -15,7 +15,7 @@ async function createQuestion(req, res) {
     text: req.body.text,
     type: req.body.type,
     answer_type: req.body.answerType,
-    question_answer: {answers: req.body.Options},
+    question_answer: {answers: req.body.answersArray},
     created_by: req.body.createdBy
   }
   const { error } = questionValidator.questionsSchema.validate(reqBody);
