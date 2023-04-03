@@ -11,30 +11,27 @@ module.exports = {
 };
 
 async function createUser(userData) {
-  const users = await getUsers();
-  const allUsers = JSON.stringify(users);
-  if(allUsers) {
-    const userExists = allUsers.some(user => user.email === userData.email)}
-  if(userExists) return "User Email already Exist";
-  else {
-    try {
-      return prisma.users.create({
-        data: { ...userData }
-      });
-    } catch(err){
-      if (err.code === 'P2002' && err.meta.target.includes('email')) {
-        return new Error('Email already exists')
-      }
-      return err
-    }
+  console.log(userData)
+  const {email} = userData;
+  const existingUser = await prisma.users.findUnique({
+    where: { email },
+  });
+  if (existingUser) {
+    // User with this email already exists
+    return "Email Already in Use";
   }
+  
+  const newUser = await prisma.users.create({
+    data: { ...userData },
+  });
+  
+  return newUser;
 }
 
 async function loginUser(email, password) {
   const user = await prisma.users.findUnique({
     where: { email }
   })
-  console.log(user)
   if (!user) return "Email does not exist"
   else {
     if (user.password === password) return user;
