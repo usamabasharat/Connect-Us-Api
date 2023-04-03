@@ -1,5 +1,5 @@
 const feedbackService = require("../dal/feedbacks.dal")
-const feedbackValidator = require("../validators/feedback.validator");
+const feedbackValidator = require("../validators/feedbacks.validator");
 const CONST = require("../const");
 
 module.exports = {

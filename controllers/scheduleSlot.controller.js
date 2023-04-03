@@ -1,5 +1,5 @@
 const scheduledSlotsService = require("../dal/scheduleSlot.dao")
-const scheduledSlotsValidator = require("../validators/scheduledSlot.validator");
+const scheduledSlotsValidator = require("../validators/scheduledSlots.validator");
 const CONST = require("../const");
 
 module.exports = {

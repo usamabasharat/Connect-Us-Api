@@ -1,5 +1,5 @@
 const questionService = require("../dal/questions.dao");
-const questionValidator = require("../validators/question.validator");
+const questionValidator = require("../validators/questions.validator");
 const CONST = require("../const");
 
 module.exports = {
