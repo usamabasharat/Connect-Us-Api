@@ -4,14 +4,17 @@ const userValidator = require("../validators/user.validator");
 module.exports = {
   createUser,
   getUsers,
-  getUserById,
+  getUserByEmail,
   updateUser,
   deleteUser,
+  loginUser
 };
 
 
 async function createUser(req, res) {
   const reqBody = req.body;
+  delete reqBody.confirm_password;
+  reqBody.salt = "salt";
   const { error } = userValidator.userSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: "Invalid Body", error });
@@ -20,16 +23,21 @@ async function createUser(req, res) {
   res.send({ user });
 }
 
+async function loginUser(req, res) {
+  let {email, password} = req.body;
+  let user = await userService.loginUser(email, password);
+  console.log(user)
+  res.send(user);
+}
+
 async function getUsers(req, res) {
   let users = await userService.getUsers();
-  console.log(users);
   res.send(users);
 }
 
-async function getUserById(req, res) {
-  let { id } = req.params;
-  id = Number(id);
-  let user = await userService.getUserById(id);
+async function getUserByEmail(req, res) {
+  let { email } = req.params;
+  let user = await userService.getUserByEmail(email);
   if (!user) {
     return res.send({ message: "User does not exist" });
   }

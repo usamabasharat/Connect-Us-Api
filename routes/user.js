@@ -6,7 +6,8 @@ const router = express.Router();
 module.exports = router;
 
 router.post("/", asyncHandler(userCtrl.createUser));
+router.post("/login", asyncHandler(userCtrl.loginUser));
 router.get("/", asyncHandler(userCtrl.getUsers));
-router.get("/:id", asyncHandler(userCtrl.getUserById));
+router.get("/:email", asyncHandler(userCtrl.getUserByEmail));
 router.put("/:id" , asyncHandler(userCtrl.updateUser))
 router.delete("/:id" , asyncHandler(userCtrl.deleteUser))
