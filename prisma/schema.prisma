@@ -26,6 +26,7 @@ model exception_slots {
   id      Int      @id() @default(autoincrement())
   from    DateTime @db.Timestamp(6)
   to      DateTime @db.Timestamp(6)
+  title   String
   user_id Int
   users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_87")
 
@@ -66,6 +67,7 @@ model meetings {
   description     String
   attachments     String
   url             String
+  type            meeting_type
   attendees       attendees[]
   feedbacks       feedbacks[]
   scheduled_slots scheduled_slots[]
@@ -179,4 +181,13 @@ enum week_day {
   wednesday
   thursday
   friday
+}
+
+enum meeting_type {
+  mock
+  codereview
+  one
+  annual
+  biannual
+  quarterly
 }
