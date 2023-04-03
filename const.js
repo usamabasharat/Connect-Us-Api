@@ -49,6 +49,10 @@ const QUESTION_DELETED = "Question has been deleted";
 const NO_SCHEDULED_SLOT = "Scheduled Slot does not exist";
 const NO_USER = "User does not exist";
 const USER_DELETED = "User has been deleted";
+const EMAIL_EXISTS = "Email Already in Use";
+const EMAIL_DOES_NOT_EXIST = "Email does not exist";
+const PASSWORD_DOES_NOT_MATCH = "Password does not match";
+
 
 module.exports = {
   ROLE_ENUM,
@@ -93,4 +97,7 @@ module.exports = {
   NO_SCHEDULED_SLOT,
   NO_USER,
   USER_DELETED,
+  EMAIL_EXISTS,
+  EMAIL_DOES_NOT_EXIST,
+  PASSWORD_DOES_NOT_MATCH
 };

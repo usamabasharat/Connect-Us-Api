@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const CONST = require("../const");
+
 
 module.exports = {
   createUser,
@@ -18,7 +20,7 @@ async function createUser(userData) {
   });
   if (existingUser) {
     // User with this email already exists
-    return "Email Already in Use";
+    return CONST.EMAIL_EXISTS;
   }
   
   const newUser = await prisma.users.create({
@@ -32,10 +34,10 @@ async function loginUser(email, password) {
   const user = await prisma.users.findUnique({
     where: { email }
   })
-  if (!user) return "Email does not exist"
+  if (!user) return CONST.EMAIL_DOES_NOT_EXIST;
   else {
     if (user.password === password) return user;
-    else return "Password does not match"
+    else return CONST.PASSWORD_DOES_NOT_MATCH
   }
 }
 
