@@ -8,7 +8,8 @@ module.exports = {
   getUserByEmail,
   updateUser,
   deleteUser,
-  loginUser
+  loginUser,
+  updatePassword
 };
 
 
@@ -27,6 +28,12 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
   let {email, password} = req.body;
   let user = await userService.loginUser(email, password);
+  res.send({user});
+}
+
+async function updatePassword(req, res) {
+  let {email, password} = req.body;
+  let user = await userService.updatePassword(email, password);
   res.send({user});
 }
 

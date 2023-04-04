@@ -9,12 +9,13 @@ module.exports = {
   getUsers,
   getUserByEmail,
   updateUser,
-  deleteUser
+  deleteUser,
+  updatePassword,
 };
 
 async function createUser(userData) {
   console.log(userData)
-  const {email} = userData;
+  const { email } = userData;
   const existingUser = await prisma.users.findUnique({
     where: { email },
   });
@@ -22,11 +23,11 @@ async function createUser(userData) {
     // User with this email already exists
     return CONST.EMAIL_EXISTS;
   }
-  
+
   const newUser = await prisma.users.create({
     data: { ...userData },
   });
-  
+
   return newUser;
 }
 
@@ -38,6 +39,20 @@ async function loginUser(email, password) {
   else {
     if (user.password === password) return user;
     else return CONST.PASSWORD_DOES_NOT_MATCH
+  }
+}
+
+async function updatePassword(email, newPassword) {
+  const user = await prisma.users.findUnique({
+    where: { email }
+  })
+  if (!user) return CONST.EMAIL_DOES_NOT_EXIST;
+  else {
+    const updatedUser = await prisma.users.update({
+      where: { email },
+      data: { password: newPassword },
+    })
+    return updatedUser;
   }
 }
 
