@@ -33,7 +33,10 @@ async function createUser(userData) {
 
 async function loginUser(email, password) {
   const user = await prisma.users.findUnique({
-    where: { email }
+    where: { email },
+    include: {
+      questions: true,
+    },
   })
   if (!user) return CONST.EMAIL_DOES_NOT_EXIST;
   else {
