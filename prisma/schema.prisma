@@ -91,7 +91,6 @@ model scheduled_slots {
   to         DateTime                 @db.Timestamp(6)
   meeting_id Int
   user_id    Int
-  type       meeting_participant_type
   meetings   meetings                 @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users      users                    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
