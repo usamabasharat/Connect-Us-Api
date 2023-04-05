@@ -55,6 +55,7 @@ async function updateUser(req, res) {
   let { id } = req.params;
   id = Number(id);
   let reqObject = req.body;
+  reqObject.salt = "salt";
   const { error } = userValidator.userUpdateSchema.validate(reqObject);
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });

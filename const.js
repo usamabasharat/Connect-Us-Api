@@ -52,6 +52,8 @@ const USER_DELETED = "User has been deleted";
 const EMAIL_EXISTS = "Email Already in Use";
 const EMAIL_DOES_NOT_EXIST = "Email does not exist";
 const PASSWORD_DOES_NOT_MATCH = "Password does not match";
+const WEEK_DAY_USED = "Generic Slot already taken for the selected day please go to edit profile to edit slot"
+const UPDATE_GENERIC_SLOT = "Updated Slot Successfully";
 
 
 module.exports = {
@@ -99,5 +101,6 @@ module.exports = {
   USER_DELETED,
   EMAIL_EXISTS,
   EMAIL_DOES_NOT_EXIST,
-  PASSWORD_DOES_NOT_MATCH
+  PASSWORD_DOES_NOT_MATCH,WEEK_DAY_USED,
+  UPDATE_GENERIC_SLOT
 };
