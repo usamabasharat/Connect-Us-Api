@@ -11,13 +11,17 @@ module.exports = {
 };
 
 async function createGenericSlot(req, res) {
-  const reqBody = req.body;
+  const {GenericSlots,...reqBody} = req.body;
   const { error } = genericValidator.genericSlotSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   const genericSlot = await genericService.createGenericSlot(reqBody);
-  res.send({ genericSlot });
+  if (typeof genericSlot === 'string'){
+    return res.send({message: genericSlot})
+  }else{
+  res.send({ genericSlot })
+  };
 }
 
 async function getGenericSlots(req, res) {
@@ -37,17 +41,17 @@ async function getGenericSlotById(req, res) {
 
 async function updateGenericSlot(req, res) {
   let { id } = req.params;
-  id = Number(id);
-  let reqObject = req.body;
-  const { error } = genericValidator.genericSlotSchema.validate(reqObject);
+  id = String(id);
+  const {GenericSlots,...reqBody} = req.body;
+  const { error } = genericValidator.genericSlotSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
   let updateGenericSlot = await genericService.updateGenericSlot({
-    where: { id },
-    data: reqObject,
+    where: { type: id },
+    data: reqBody,
   });
-  res.send(updateGenericSlot);
+  res.send({updateGenericSlot, message: CONST.UPDATE_GENERIC_SLOT});
 }
 
 async function deleteGenericSlot(req, res) {

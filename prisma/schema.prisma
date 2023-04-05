@@ -54,7 +54,7 @@ model generic_slots {
   from    DateTime @db.Time(6)
   to      DateTime @db.Time(6)
   user_id Int
-  type    week_day
+  type    week_day @unique
   users   users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([user_id])
@@ -74,9 +74,9 @@ model meetings {
 model questions {
   id          Int                  @id() @default(autoincrement())
   text        String
+  question_answer Json
   type        question_type
   answer_type question_answer_type
-  question_answer Json
   created_by  Int
   users       users                @relation(fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
