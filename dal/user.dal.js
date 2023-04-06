@@ -14,7 +14,6 @@ module.exports = {
 };
 
 async function createUser(userData) {
-  console.log(userData)
   const { email } = userData;
   const existingUser = await prisma.users.findUnique({
     where: { email },

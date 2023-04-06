@@ -9,6 +9,9 @@ const exceptionSlotSchema = Joi.object({
     "any.required": `${CONST.TO_TIME}`,
   }),
   user_id: Joi.number().greater(0),
+  title: Joi.string().required().messages({
+    "any.required": `${CONST.TITLE_REQUIRED}`,
+  }),
 });
 
 module.exports = {
