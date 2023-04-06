@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 module.exports = {
   createQuestion,
   getQuestions,
-  getQuestionById,
+  getQuestionByType,
   updateQuestion,
   deleteQuestion
 };
@@ -20,9 +20,9 @@ function getQuestions() {
   return prisma.questions.findMany()
 }
 
-function getQuestionById(id) {
-  return prisma.questions.findUnique({
-    where: { id }
+function getQuestionByType(type) {
+  return prisma.questions.findMany({
+    where: { type}
   })
 }
 

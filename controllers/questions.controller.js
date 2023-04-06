@@ -5,7 +5,7 @@ const CONST = require("../const");
 module.exports = {
   createQuestion,
   getQuestions,
-  getQuestionById,
+  getQuestionByType,
   updateQuestion,
   deleteQuestion,
 };
@@ -31,10 +31,10 @@ async function getQuestions(req, res) {
   res.send(questions);
 }
 
-async function getQuestionById(req, res) {
-  let { id } = req.params;
-  id = Number(id);
-  let question = await questionService.getQuestionById(id);
+async function getQuestionByType(req, res) {
+  let { type } = req.params;
+  console.log(typeof type);
+  let question = await questionService.getQuestionByType(type);
   if (!question) {
     return res.send({ message: `${CONST.NO_QUESTION}` });
   }
