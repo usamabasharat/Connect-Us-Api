@@ -11,7 +11,7 @@ module.exports = {
 };
 
 async function createExceptionSlot(req, res) {
-  const reqBody = req.body;
+  const {ExceptionSlots,...reqBody} = req.body;
   const { error } = exceptionSlotsValidator.exceptionSlotSchema.validate(reqBody);
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });

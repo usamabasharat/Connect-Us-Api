@@ -10,12 +10,13 @@ module.exports = {
 };
 
 function createExceptionSlot(exception_slotData) {
-  const { from , to , user_id } = exception_slotData;
+  const { from , to , user_id, title } = exception_slotData;
   return prisma.exception_slots.create({
     data: {
       from: new Date(from),
       to: new Date(to),
-      user_id: user_id
+      user_id,
+      title
     }
   });
 }
@@ -25,8 +26,8 @@ function getExceptionSlots() {
 }
 
 function getExceptionSlotById(id) {
-  return prisma.exception_slots.findUnique({
-    where: { id }
+  return prisma.exception_slots.findMany({
+    where: { user_id:id }
   })
 }
 
