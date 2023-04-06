@@ -7,6 +7,6 @@ module.exports = router;
 
 router.post("/", asyncHandler(questionCtrl.createQuestion));
 router.get("/", asyncHandler(questionCtrl.getQuestions));
-router.get("/:id", asyncHandler(questionCtrl.getQuestionById));
+router.get("/:type", asyncHandler(questionCtrl.getQuestionByType));
 router.put("/:id" , asyncHandler(questionCtrl.updateQuestion));
 router.delete("/:id" , asyncHandler(questionCtrl.deleteQuestion));

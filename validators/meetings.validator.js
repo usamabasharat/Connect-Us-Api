@@ -14,6 +14,9 @@ const scheduleSlotSchema = Joi.object({
   url: Joi.string().required().messages({
     "any.required": `${CONST.QUESTION_REQUIRED}`,
   }),
+  type: Joi.string().required().messages({
+    "any.required": `${CONST.QUESTION_REQUIRED}`,
+  }),
 });
 
 module.exports = {
