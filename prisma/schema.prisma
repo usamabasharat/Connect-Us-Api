@@ -14,7 +14,7 @@ model attendees {
   type       meeting_participant_type
   accepted   Boolean?
   notes      String?
-  optional   Boolean
+  optional   Boolean?
   users      users                    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   meetings   meetings                 @relation(fields: [meeting_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 

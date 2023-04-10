@@ -15,9 +15,7 @@ const attendeesSchema = Joi.object({
     }),
   accepted: Joi.boolean(),
   notes: Joi.string(),
-  optional: Joi.boolean().required().messages({
-    "any.required": `${CONST.OPTIONAL_REQUIRED}`,
-  }),
+  optional: Joi.boolean(),
 });
 
 module.exports = {

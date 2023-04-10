@@ -10,14 +10,14 @@ module.exports = {
   deleteAttendee,
 };
 
-async function createAttendee(req, res) {
-  const reqBody = req.body;
-  const { error } = attendeesValidator.attendeesSchema.validate(reqBody);
+async function createAttendee(req, res , args) {
+  const { user_id, meeting_id ,type} = args;
+  const { error } = attendeesValidator.attendeesSchema.validate({ user_id, meeting_id ,type});
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}` , error });
   }
-  const attendees = await attendeesService.createAttendee(reqBody);
-  res.send({ attendees });
+  const attendees = await attendeesService.createAttendee({ user_id, meeting_id ,type});
+  console.log(attendees);
 }
 
 async function getAttendees(req, res) {
