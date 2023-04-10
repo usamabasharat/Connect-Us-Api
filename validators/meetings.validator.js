@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const CONST = require("../const");
 
-const scheduleSlotSchema = Joi.object({
+const meetingSchema = Joi.object({
   title: Joi.string().required().messages({
     "any.required": `${CONST.TITLE_REQUIRED}`,
   }),
@@ -12,13 +12,13 @@ const scheduleSlotSchema = Joi.object({
     "any.required": `${CONST.ATTACHMENT_REQUIRED}`,
   }),
   url: Joi.string().required().messages({
-    "any.required": `${CONST.QUESTION_REQUIRED}`,
+    "any.required": `${CONST.URL}`,
   }),
   type: Joi.string().required().messages({
-    "any.required": `${CONST.QUESTION_REQUIRED}`,
+    "any.required": `${CONST.MEETING_TYPE}`,
   }),
 });
 
 module.exports = {
-  scheduleSlotSchema,
+  meetingSchema,
 };

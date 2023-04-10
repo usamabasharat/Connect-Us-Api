@@ -54,6 +54,9 @@ const EMAIL_DOES_NOT_EXIST = "Email does not exist";
 const PASSWORD_DOES_NOT_MATCH = "Password does not match";
 const WEEK_DAY_USED = "Generic Slot already taken for the selected day please go to edit profile to edit slot"
 const UPDATE_GENERIC_SLOT = "Updated Slot Successfully";
+const URL = "url is required";
+const MEETING_TYPE = "Meeting type is required";
+const MEETING_CREATED = "Meeting Created Successfully"
 
 
 module.exports = {
@@ -102,5 +105,8 @@ module.exports = {
   EMAIL_EXISTS,
   EMAIL_DOES_NOT_EXIST,
   PASSWORD_DOES_NOT_MATCH,WEEK_DAY_USED,
-  UPDATE_GENERIC_SLOT
+  UPDATE_GENERIC_SLOT,
+  URL,
+  MEETING_TYPE,
+  MEETING_CREATED
 };

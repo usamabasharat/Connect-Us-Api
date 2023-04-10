@@ -1,6 +1,7 @@
 const meetingService = require("../dal/meetings.dal")
 const meetingValidator = require("../validators/meetings.validator");
 const CONST = require("../const");
+const { createScheduleSlots } = require("./scheduleSlot.controller");
 
 module.exports = {
   createMeeting,
@@ -12,12 +13,17 @@ module.exports = {
 
 async function createMeeting(req, res) {
   const reqBody = req.body;
-  const { error } = meetingValidator.scheduleSlotSchema.validate(reqBody);
+  const {title, description, attachments, url, type} = reqBody 
+  const { error } = meetingValidator.meetingSchema.validate({title, description, attachments, url, type});
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  const meeting = await meetingService.createMeeting(reqBody);
-  res.send({ meeting });
+  const meeting = await meetingService.createMeeting({title, description, attachments, url, type});
+  reqBody.meeting_id = meeting.id
+  if(meeting.id){
+    createScheduleSlots(req, res, reqBody);
+  }
+  res.send({ message: `${CONST.MEETING_CREATED}` });
 }
 
 async function getMeetings(req, res) {

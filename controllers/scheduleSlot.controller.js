@@ -10,14 +10,13 @@ module.exports = {
   deleteScheduleSlots,
 };
 
-async function createScheduleSlots(req, res) {
-  const reqBody = req.body;
-  const { error } = scheduledSlotsValidator.scheduleSlotSchema.validate(reqBody);
+async function createScheduleSlots(req, res, args) {
+  const {from, to, user_id, meeting_id} = args
+  const { error } = scheduledSlotsValidator.scheduleSlotSchema.validate({from, to, user_id, meeting_id});
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}`, error });
   }
-  const scheduledSlot = await scheduledSlotsService.createScheduleSlots(reqBody);
-  res.send({ scheduledSlot });
+  const scheduledSlot = await scheduledSlotsService.createScheduleSlots({from, to, user_id, meeting_id});
 }
 
 async function getScheduledSlots(req, res) {
