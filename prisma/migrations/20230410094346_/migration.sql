@@ -22,6 +22,9 @@ CREATE TYPE "meeting_participant_type" AS ENUM ('host', 'participant');
 -- CreateEnum
 CREATE TYPE "week_day" AS ENUM ('monday', 'tuesday', 'wednesday', 'thursday', 'friday');
 
+-- CreateEnum
+CREATE TYPE "meeting_type" AS ENUM ('mock', 'codereview', 'one', 'annual', 'biannual', 'quarterly');
+
 -- CreateTable
 CREATE TABLE "attendees" (
     "id" SERIAL NOT NULL,
@@ -40,6 +43,7 @@ CREATE TABLE "exception_slots" (
     "id" SERIAL NOT NULL,
     "from" TIMESTAMP(6) NOT NULL,
     "to" TIMESTAMP(6) NOT NULL,
+    "title" TEXT NOT NULL,
     "user_id" INTEGER NOT NULL,
 
     CONSTRAINT "exception_slots_pkey" PRIMARY KEY ("id")
@@ -71,11 +75,12 @@ CREATE TABLE "generic_slots" (
 
 -- CreateTable
 CREATE TABLE "meetings" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "attachments" TEXT NOT NULL,
     "url" TEXT NOT NULL,
+    "type" "meeting_type" NOT NULL,
 
     CONSTRAINT "meetings_pkey" PRIMARY KEY ("id")
 );
@@ -84,6 +89,7 @@ CREATE TABLE "meetings" (
 CREATE TABLE "questions" (
     "id" SERIAL NOT NULL,
     "text" TEXT NOT NULL,
+    "question_answer" JSONB NOT NULL,
     "type" "question_type" NOT NULL,
     "answer_type" "question_answer_type" NOT NULL,
     "created_by" INTEGER NOT NULL,
@@ -98,14 +104,13 @@ CREATE TABLE "scheduled_slots" (
     "to" TIMESTAMP(6) NOT NULL,
     "meeting_id" INTEGER NOT NULL,
     "user_id" INTEGER NOT NULL,
-    "type" "meeting_participant_type" NOT NULL,
 
     CONSTRAINT "scheduled_slots_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "first_name" VARCHAR(255) NOT NULL,
     "last_name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
@@ -138,6 +143,9 @@ CREATE INDEX "feedbacks_evaluated_by_idx" ON "feedbacks"("evaluated_by");
 CREATE INDEX "feedbacks_meeting_id_idx" ON "feedbacks"("meeting_id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "generic_slots_type_key" ON "generic_slots"("type");
+
+-- CreateIndex
 CREATE INDEX "generic_slots_user_id_idx" ON "generic_slots"("user_id");
 
 -- CreateIndex
@@ -148,6 +156,9 @@ CREATE INDEX "scheduled_slots_meeting_id_idx" ON "scheduled_slots"("meeting_id")
 
 -- CreateIndex
 CREATE INDEX "scheduled_slots_user_id_idx" ON "scheduled_slots"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE INDEX "users_manager_id_idx" ON "users"("manager_id");

@@ -2,6 +2,7 @@ const meetingService = require("../dal/meetings.dal")
 const meetingValidator = require("../validators/meetings.validator");
 const CONST = require("../const");
 const { createScheduleSlots } = require("./scheduleSlot.controller");
+const { createAttendee } = require("./attendees.controller");
 
 module.exports = {
   createMeeting,
@@ -13,6 +14,7 @@ module.exports = {
 
 async function createMeeting(req, res) {
   const reqBody = req.body;
+  console.log(reqBody);
   const {title, description, attachments, url, type} = reqBody 
   const { error } = meetingValidator.meetingSchema.validate({title, description, attachments, url, type});
   if (error !== undefined) {
@@ -22,6 +24,17 @@ async function createMeeting(req, res) {
   reqBody.meeting_id = meeting.id
   if(meeting.id){
     createScheduleSlots(req, res, reqBody);
+    reqBody.attendees.forEach(attendee => {
+      if(attendee  === reqBody.user_id){
+        reqBody.type = 'host';
+        createAttendee(req, res, reqBody);
+      }
+      else {
+        reqBody.user_id = attendee;
+        reqBody.type = 'participant';
+        createAttendee(req, res, reqBody);
+      }
+    });
   }
   res.send({ message: `${CONST.MEETING_CREATED}` });
 }
