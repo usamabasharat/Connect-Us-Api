@@ -1,7 +1,7 @@
 const meetingService = require("../dal/meetings.dal")
 const meetingValidator = require("../validators/meetings.validator");
 const CONST = require("../const");
-const { createScheduleSlots } = require("./scheduleSlot.controller");
+const { createScheduleSlots, getScheduledSlotsById } = require("./scheduleSlot.controller");
 const { createAttendee } = require("./attendees.controller");
 
 module.exports = {
@@ -46,12 +46,9 @@ async function getMeetings(req, res) {
 
 async function getMeetingById(req, res) {
   let { id } = req.params;
-  id = Number(id);
-  let meeting = await meetingService.getMeetingById(id);
-  if (!meeting) {
-    return res.send({ message: `${CONST.NO_MEETING}` });
-  }
-  else res.send(meeting);
+  userId = Number(id);
+  const scheduledSlot = await getScheduledSlotsById(userId, res);
+  res.send(scheduledSlot);
 }
 
 async function updateMeeting(req, res) {

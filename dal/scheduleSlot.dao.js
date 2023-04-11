@@ -28,8 +28,15 @@ function getScheduledSlots() {
 }
 
 function getScheduledSlotsById(id) {
-  return prisma.scheduled_slots.findUnique({
-    where: { id }
+  return prisma.scheduled_slots.findMany({
+    where: { user_id: id },
+    include: {
+      meetings: {
+        include: {
+          attendees: true
+        }
+      }
+    },
   })
 }
 

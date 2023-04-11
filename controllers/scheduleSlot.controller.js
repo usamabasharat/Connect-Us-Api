@@ -25,13 +25,12 @@ async function getScheduledSlots(req, res) {
 }
 
 async function getScheduledSlotsById(req, res) {
-  let { id } = req.params;
-  id = Number(id);
+  let id = req;
   let scheduleSlot = await scheduledSlotsService.getScheduledSlotsById(id);
   if (!scheduleSlot) {
     return res.send({ message: `${CONST.NO_SCHEDULED_SLOT}` });
   }
-  else res.send(scheduleSlot);
+  else return scheduleSlot;
 }
 
 async function updateScheduledSlots(req, res) {
