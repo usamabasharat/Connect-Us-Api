@@ -22,16 +22,28 @@ async function createMeeting(req, res) {
   }
   const meeting = await meetingService.createMeeting({title, description, attachments, url, type});
   reqBody.meeting_id = meeting.id
+  const optional = reqBody.optional
   if(meeting.id){
     createScheduleSlots(req, res, reqBody);
     reqBody.attendees.forEach(attendee => {
+      const optionalCheck = optional.findIndex(number => number === attendee);
       if(attendee  === reqBody.user_id){
+        if (optionalCheck !== -1){
+          reqBody.optional = true
+        } else {
+          reqBody.optional = false
+        }
         reqBody.type = 'host';
         createAttendee(req, res, reqBody);
       }
       else {
+        if (optionalCheck !== -1){
+          reqBody.optional = true
+        } else {
+          reqBody.optional = false
+        }
         reqBody.user_id = attendee;
-        reqBody.type = 'participant';
+        reqBody.type = 'participant'; 
         createAttendee(req, res, reqBody);
       }
     });

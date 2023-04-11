@@ -11,13 +11,12 @@ module.exports = {
 };
 
 async function createAttendee(req, res , args) {
-  const { user_id, meeting_id ,type} = args;
-  const { error } = attendeesValidator.attendeesSchema.validate({ user_id, meeting_id ,type});
+  const { user_id, meeting_id ,type, optional} = args;
+  const { error } = attendeesValidator.attendeesSchema.validate({ user_id, meeting_id ,type, optional});
   if (error !== undefined) {
     return res.send({ message: `${CONST.INVALID_BODY}` , error });
   }
-  const attendees = await attendeesService.createAttendee({ user_id, meeting_id ,type});
-  console.log(attendees);
+  const attendees = await attendeesService.createAttendee({ user_id, meeting_id ,type, optional});
 }
 
 async function getAttendees(req, res) {
