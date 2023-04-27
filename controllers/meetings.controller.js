@@ -2,7 +2,7 @@ const meetingService = require("../dal/meetings.dal")
 const meetingValidator = require("../validators/meetings.validator");
 const CONST = require("../const");
 const { createScheduleSlots, getScheduledSlotsById } = require("./scheduleSlot.controller");
-const { createAttendee } = require("./attendees.controller");
+const { createAttendee, getAttendeeById} = require("./attendees.controller");
 
 module.exports = {
   createMeeting,
@@ -59,8 +59,8 @@ async function getMeetings(req, res) {
 async function getMeetingById(req, res) {
   let { id } = req.params;
   userId = Number(id);
-  const scheduledSlot = await getScheduledSlotsById(userId, res);
-  res.send(scheduledSlot);
+  const getAttendee = await getAttendeeById(userId, res);
+  res.send(getAttendee);
 }
 
 async function updateMeeting(req, res) {

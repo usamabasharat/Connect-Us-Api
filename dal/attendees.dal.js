@@ -20,8 +20,15 @@ function getAttendees() {
 }
 
 function getAttendeeById(id) {
-  return prisma.attendees.findUnique({
-    where: { id }
+  return prisma.attendees.findMany({
+    where: { user_id: id },
+    include: {
+      meetings: {
+        include: {
+          scheduled_slots: true
+        }
+      }
+    },
   })
 }
 

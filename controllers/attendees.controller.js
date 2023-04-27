@@ -25,12 +25,11 @@ async function getAttendees(req, res) {
 }
 
 async function getAttendeeById(req, res) {
-  let { id } = req.params;
-  id = Number(id);
+  let id = req;
   let attendees = await attendeesService.getAttendeeById(id);
   if (!attendees) {
     return res.send({ message: `${CONST.NO_ATTENDEES}` });
-  } else res.send(attendees);
+  } else {return attendees  }
 }
 
 async function updateAttendee(req, res) {
