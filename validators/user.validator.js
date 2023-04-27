@@ -48,7 +48,7 @@ const userObject = {
     }),
 }
 const userSchema = Joi.object(userObject);
-const {email,role,...updateUserObject} = userObject
+const {email,role,password,...updateUserObject} = userObject
 const userUpdateSchema = Joi.object(updateUserObject);
 
 module.exports = {
